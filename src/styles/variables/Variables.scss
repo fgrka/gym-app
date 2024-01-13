@@ -1,0 +1,28 @@
+$col-white: rgb(255, 255, 255);
+$col-light: #8ecae6;
+$col-middle: #219ebc;
+$col-dark: #023047;
+$col-black: #000b11;
+$col-accent1: #ffb703;
+$col-accent2: #fb8500;
+
+$font-main: Montserrat;
+$font-title: Bebas Neue;
+
+@mixin button {
+    height: 2rem;
+    width: 4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: $font-main;
+    background-color: $col-accent1;
+    color: $col-black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@mixin borders {
+    border: 2px black solid;
+    border-radius: 8px;
+}
