@@ -1,9 +1,18 @@
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import fetchData from "../../utils/fetchData";
+
 import CategoryCard from "./CategoryCard";
 
-
 const Categories = () => {
+
+    const navigate =  useNavigate();
+    const handleCategoryClick = async (category) => {
+        const exercisesURL = 'https://exercisedb.p.rapidapi.com/exercises';
+        const exercisesData = await fetchData(exercisesURL);
+        const categoryResult = exercisesData.filter(exercise => exercise.bodyPart.includes(category));
+        navigate("/exercises", { state: categoryResult });
+    }
+
     // const [ categoryData, setCategoryData ] = useState([])
 
     // useEffect(() =>  
@@ -29,7 +38,7 @@ const Categories = () => {
 
     return (
         <div>
-            <CategoryCard data={data}/>
+            <CategoryCard data={data} onCategoryClick ={handleCategoryClick}/>
         </div>
     );
 };

@@ -1,49 +1,56 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+import { AppContext } from '../../utils/AppContext';
 import refreshIcon from "../../assets/icons8-refresh.svg" 
+import WorkoutTimer from './WorkoutTimer';
 
-const WorkoutCard = ({exercise, provided, params, handleRemove}) => {
+const WorkoutCard = ({exercise, provided, handleRemove}) => {
+
+    const { workoutParams, handleWorkoutParams } = useContext(AppContext);
 
     const timeForSet = useRef();
     const sets = useRef();
     const reps = useRef();
 
-    const [workoutParams, setWorkoutParams] = useState({           
-        timeForSet : "",
-        sets : "",
-        reps : "",
-        totalTime : "",
- })
+    const [currentExercise, setCurrentExercise] = useState("");
     const [isDisabled, setDisabled] = useState(false);
+    const [isTimerStarted, setTimerStart] = useState(false);
 
     const handleInput = () => {
         const totalTime =  timeForSet.current.value * sets.current.value;
-  
-
-        setWorkoutParams((prev) =>({     
-            ...prev,
-            timeForSet : timeForSet.current.value,
-            sets : sets.current.value,
-            reps : reps.current.value,
-            totalTime : totalTime,
-            }))
-        
-        
+        if (reps.current.value > 60 || sets.current.value > 60 || timeForSet.current.value > 60) {
+                alert("Ustaw prawidłową wartość (1-60)");
+        }
+        else {
+            handleWorkoutParams({
+                id: exercise.id,
+                timeForSet : timeForSet.current.value,
+                sets : sets.current.value,
+                reps : reps.current.value,
+                totalTime : totalTime,
+            });
+        }       
    }
 
-   function handleStartWorkout() {
-    console.log(workoutParams)
-        if (workoutParams.sets>0 && workoutParams.reps>0 && workoutParams.time>0) {
-            setDisabled(true);
-        }
+   function handleStartWorkout(id) {
+        const current = workoutParams.find((exercise) => exercise.id === id);
+        setCurrentExercise(current);
+            if (current?.sets>0 && current?.reps>0 && current?.timeForSet>0) {
+                setDisabled(true);
+                setTimerStart(true);
+            }
+            else {
+                alert("Wartość nie może być równa 0")
+            }
    }
 
    const handleRefresh = () => {
-    setWorkoutParams({
-        name: "",
-        value: ""
-   });
-    setDisabled(false);
+        handleWorkoutParams({});
+        setDisabled(false);
+        setTimerStart(false);
+        reps.current.value = 0;
+        sets.current.value = 0;
+        timeForSet.current.value = 0;
    }
 
     return (
@@ -76,16 +83,29 @@ const WorkoutCard = ({exercise, provided, params, handleRemove}) => {
                     </div>   
                 </div>
             </div>
-         
             <div className="workout-timer">
-                <div className="set-time">SET {workoutParams.sets} <span className="time"> {workoutParams.timeForSet ? workoutParams.timeForSet + ":00" : "0:00"}</span></div>
-                <div className="total-time">TOTAL: 
+                {/* {isTimerStarted ? <WorkoutTimer timerType={"SET"} currentExercise={currentExercise}/>
+                : 
+                <div className="timer-countdown">SET {currentExercise.sets}      
                     <span className="time"> 
-                        {workoutParams.totalTime ? workoutParams.totalTime+":00" : "0:00"}
+                    {currentExercise.timeForSet ? currentExercise.timeForSet < 10 ? "0"+currentExercise.timeForSet+":00" : currentExercise.timeForSet+":00" : "0:00" }
                     </span>
-                </div>
+                </div> 
+                }
+
+                {isTimerStarted ? <WorkoutTimer timerType={"TOTAL"} currentExercise={currentExercise}/>
+                : 
+                <div className="timer-countdown">TOTAL
+                    <span className="time"> 
+                    {currentExercise.totalTime ? currentExercise.totalTime < 10 ? "0"+ currentExercise.totalTime+":00" : currentExercise.totalTime+":00" : "0:00" }
+                    </span>
+                </div> 
+                } */}
+                 <WorkoutTimer timerType={"SET"} time={currentExercise.timeForSet} startTimer={isTimerStarted}/>
+                 <WorkoutTimer timerType={"TOTAL"} time={currentExercise.totalTime} startTimer={isTimerStarted}/>
+
             </div>
-            <button className="workout-set-btn" onClick={handleStartWorkout}>START</button>
+            <button className="workout-set-btn" onClick={() => handleStartWorkout(exercise.id)}>START</button>
             <img className="workout-refresh" src={refreshIcon} onClick={handleRefresh}/>
         </div>
     );

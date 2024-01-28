@@ -335,12 +335,7 @@ h3 {
         font-size: 1.2rem;
     }
 
-    .set-time {
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-    }
-
-    .total-time {
+    .timer-countdown {
         display: grid;
         grid-template-rows: 1fr 1fr;
     }

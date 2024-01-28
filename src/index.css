@@ -339,11 +339,7 @@ h3 {
   height: 2.5rem;
   font-size: 1.2rem;
 }
-.workout .set-time {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-}
-.workout .total-time {
+.workout .timer-countdown {
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
