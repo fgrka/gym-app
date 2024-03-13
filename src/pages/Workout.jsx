@@ -1,52 +1,53 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import WorkoutResults from "../components/Workout/WorkoutResults";
+import WorkoutCard from "../components/Workout/WorkoutCard";
+import { AppContext } from "../utils/AppContext";
+import SaveModal from "../components/Workout/SaveModal";
 
 const Workout = () => {
-    const[exercises, setExercises] = useState([]);
+    const { chosenExercises, saveWorkout } = useContext(AppContext);
+    const [isSaveBtnClick, setIsSaveBtnClick] = useState(false);
+     
 
-    useEffect(() => {
-        if (localStorage.length !== 0) {
-            const exercisesData = JSON.parse(localStorage.getItem("exercises"));
-            setExercises(Object.values(exercisesData));
-        }
-    },[])
+    //reload component after changing the array of chosen exercises
+    useEffect(() => {                                               
+        setIsSaveBtnClick(false);
+    }, [chosenExercises])
 
-    const handleRemove = (exercise) => {
-        const exercisesData = JSON.parse(localStorage.getItem("exercises"));
-        delete exercisesData[exercise.id];
-        Object.values(exercisesData).length == 0?
-        localStorage.removeItem("exercises") 
-        :
-        localStorage.setItem("exercises", JSON.stringify(exercisesData)) 
-        setExercises(Object.values(exercisesData));
-    }
+    const handleSave = (data) => {
+        saveWorkout(data);
+        setIsSaveBtnClick(false); 
+        console.log("saved")
+    };
 
     return (
-        localStorage.length == 0 ?
+        chosenExercises.length == 0 ?
             <div className="workout-empty">
                 <h2>THERE IS NOTHING HERE, YET..</h2>
                 <h2>ADD EXERCISES FROM EXERCISE PAGE</h2>
-                <h2>AND GET YOUR WORKOUT DONE</h2>
             </div>
-            :                
-            <DragDropContext>
-                <Droppable droppableId="droppable">
-                {(provided) =>(
-                    <div className="workout" ref={provided.innerRef} {...provided.droppableProps} >
-                    <h2>SET TIME, REPS AND SERIES OF EXERCISES</h2>
-                        {exercises.map((exercise, index) => (
-                            <Draggable key={exercise.id} draggableId={exercise.id.toString()} index={index} >
-                                {(provided) => (
-                                    <WorkoutResults handleRemove={handleRemove} provided={provided} exercise={exercise} />
-                                )}
-                            </Draggable>
-                        ))}
-                        {provided.placeholder}
-                    </div>
-                )}
-                </Droppable>
-            </DragDropContext>
+        :   
+            <div className="workout">
+                <SaveModal isOpen={isSaveBtnClick} onSubmitData={handleSave}/>
+                <DragDropContext>
+                    <Droppable droppableId="droppable">
+                    {(provided) => (
+                        <div className="workout-list" ref={provided.innerRef} {...provided.droppableProps} >
+                        <div className="workout-title"><h2>SET TIME, REPS AND SERIES OF EXERCISES</h2></div>
+                            {chosenExercises.map((exercise, index) => (
+                                <Draggable key={exercise.id} draggableId={exercise.id.toString()} index={index} >
+                                    {(provided) => (
+                                        <WorkoutCard key={exercise.id} exercise = {exercise} provided = {provided} ></WorkoutCard>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                    </Droppable>
+                </DragDropContext>
+                <button className="save-btn" onClick={() => setIsSaveBtnClick(true)} disabled={isSaveBtnClick}>{isSaveBtnClick ? "SAVED" : "SAVE WORKOUT"}</button>
+            </div> 
         );
 };
 

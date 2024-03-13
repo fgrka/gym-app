@@ -22,7 +22,7 @@ const Navbar = () => {
                 </div>
                 </Link>
                 <div className="btn-link">
-                    <Link className="link" to={{pathname: "/workout"}}>
+                    <Link className="link" to={{pathname: "/saved"}}>
                         SAVED
                     </Link>
                 </div>

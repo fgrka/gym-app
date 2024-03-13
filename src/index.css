@@ -120,6 +120,7 @@ h3 {
   top: 6px;
   right: 10px;
   height: 1.5rem;
+  cursor: pointer;
 }
 
 .categories {
@@ -188,7 +189,7 @@ h3 {
 .exercise-card button {
   height: 2rem;
   width: 4rem;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   font-family: Montserrat;
   background-color: #ffb703;
@@ -201,6 +202,12 @@ h3 {
   right: 0.85rem;
   box-shadow: 2px 3px 0px 1px rgba(0, 0, 0, 0.071);
   cursor: pointer;
+}
+.exercise-card button:disabled {
+  background-color: lightgray;
+}
+.exercise-card button:disabled:hover {
+  background-color: lightgray;
 }
 .exercise-card .exercise-txt {
   grid-column: 2/3;
@@ -232,6 +239,37 @@ h3 {
   width: 100%;
   height: 100%;
   margin-top: 5rem;
+}
+.workout .workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.workout .workout-title {
+  text-align: center;
+  padding: 0.5rem 0rem;
+}
+.workout .save-btn {
+  height: 2rem;
+  width: 4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: Montserrat;
+  background-color: #ffb703;
+  color: #000b11;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  height: 2.2rem;
+  font-size: 1rem;
+  box-shadow: 2px 3px 0px 1px rgba(0, 0, 0, 0.071);
+}
+.workout .save-btn:disabled {
+  background-color: lightgray;
+}
+.workout .save-btn:disabled:hover {
+  background-color: lightgray;
 }
 .workout .workout-card {
   position: relative;
@@ -267,7 +305,7 @@ h3 {
 .workout .workout-card .workout-remove-btn {
   height: 2rem;
   width: 4rem;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   font-family: Montserrat;
   background-color: #ffb703;
@@ -304,7 +342,7 @@ h3 {
 .workout .workout-set-btn {
   height: 2rem;
   width: 4rem;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   font-family: Montserrat;
   background-color: #ffb703;
@@ -376,4 +414,143 @@ h3 {
 .workout .workout-time-settings .workout-time-input p {
   grid-column: 2/3;
   padding-top: 0.5rem;
+}
+
+.modal::backdrop, .save-modal::backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.247);
+}
+
+.modal {
+  min-width: 15rem;
+  margin: auto;
+  text-align: center;
+  padding: 2rem 2rem 1rem 2rem;
+  z-index: 2;
+  background: #d5c7bc;
+  border-radius: 8px;
+  border-width: 0px;
+  animation: slide-down-fade-in 0.3s ease-out forwards;
+}
+
+.modal-img {
+  height: 9rem;
+  padding: 1rem;
+}
+
+.save-modal {
+  min-width: 15rem;
+  padding: 2rem 1rem 0rem 1rem;
+  border-width: 2px;
+  margin: auto;
+  text-align: center;
+  background: #d5c7bc;
+  border-radius: 8px;
+  animation: slide-down-fade-in 0.3s ease-out forwards;
+  z-index: 99999;
+}
+.save-modal .save-modal-inner {
+  display: flex;
+  margin-top: 1rem;
+  flex-direction: column;
+}
+.save-modal .save-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: white;
+  border: none;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 1.8rem;
+  font-weight: 800;
+}
+.save-modal .save-modal-btn {
+  height: 2rem;
+  width: 4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: Montserrat;
+  background-color: #ffb703;
+  color: #000b11;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 6rem;
+  background-color: rgb(172, 79, 79);
+  padding: 0.5rem;
+  margin: 1rem auto;
+  color: white;
+  box-shadow: 2px 3px 0px 1px rgba(0, 0, 0, 0.071);
+}
+.save-modal label {
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+.save-modal input {
+  background-color: white;
+  width: 18rem;
+  margin-bottom: 1rem;
+}
+
+.saved-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  height: 10rem;
+  width: 100%;
+  color: black;
+  border: 2px black solid;
+  border-radius: 8px;
+  box-shadow: 2px 3px 0px 1px rgba(0, 0, 0, 0.071);
+}
+
+.save-card-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  grid-column: 2;
+}
+
+.save-card-btn {
+  height: 2rem;
+  width: 4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: Montserrat;
+  background-color: #ffb703;
+  color: #000b11;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 50%;
+  height: 2.2rem;
+  font-size: 1rem;
+  box-shadow: 2px 3px 0px 1px rgba(0, 0, 0, 0.071);
+}
+
+.save-card-btn-remove {
+  height: 2rem;
+  width: 4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: Montserrat;
+  background-color: #ffb703;
+  color: #000b11;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 50%;
+  height: 2.2rem;
+  font-size: 1rem;
+  background-color: white;
+  border: 1px solid rgba(128, 128, 128, 0.18);
+  box-shadow: 2px 3px 0px 1px rgba(0, 0, 0, 0.071);
 }/*# sourceMappingURL=index.css.map */
