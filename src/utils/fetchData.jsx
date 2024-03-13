@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const fetchData = async (url) => {
-    const token = process.env.VITE_RAPID_API;
+    const token = process.env.CLIENT_API;
     const options = {
       method: 'GET',
       headers: {
