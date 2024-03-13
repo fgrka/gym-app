@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const fetchData = async (url) => {
-    const token = import.meta.env.VITE_RAPID_API ?? process.env.VITE_RAPID_API;
+    const token = process.env.VITE_RAPID_API;
     const options = {
       method: 'GET',
       headers: {
@@ -16,5 +16,6 @@ const fetchData = async (url) => {
     return data;
 }
 
+//import.meta.env.VITE_RAPID_API ?? 
  
 export default fetchData;
