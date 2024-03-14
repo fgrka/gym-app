@@ -2,12 +2,12 @@ import React from 'react';
 
 const Saved = () => {
 
-    const saved = JSON.parse(localStorage.getItem("saved")) || {};
+    const saved = JSON.parse(localStorage.getItem("saved")) || false;
 
     let list = "";
 
+    if (saved)
     return (
- 
         <div className='exercises'>
         {saved.map(item => (
             <div className="saved-card">
@@ -35,6 +35,13 @@ const Saved = () => {
         ))}
         </div>
     );
+    else
+    return(
+        <div className="workout-empty">
+            <h2>THERE IS NOTHING HERE, YET..</h2>
+            <h2>SAVE EXERCISES FROM YOUR WORKOUT</h2>
+        </div>
+    )
 };
 
 export default Saved;

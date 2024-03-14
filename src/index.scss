@@ -9,7 +9,6 @@
 
 body {
     font-family: $font-main;
-    height: 100dvh;
 }
 
 
@@ -37,9 +36,8 @@ h3 {
     max-width: 30rem;
     padding: 0 0.8rem;
     margin: 0 auto;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
 }
-
 .navbar {
     width: 100%;
     display: flex;
