@@ -73,7 +73,7 @@ const WorkoutCard = ({exercise, provided,  }) => {
                  <WorkoutTimer timerType={"SET"} exercise={exercise} workoutParams={workoutParams} startTimer={isTimerStarted}/>
                  <WorkoutTimer timerType={"TOTAL"} exercise={exercise} workoutParams={workoutParams} startTimer={isTimerStarted}/>
             </div>
-            <button className="workout-set-btn" onClick={() => handleStartWorkout(exercise.id)}>START</button>
+            <button className="workout-set-btn" onClick={() => handleStartWorkout(exercise.id)} setDisabled={isTimerStarted}>START</button>
             <img className="workout-refresh" src={refreshIcon} onClick={() => handleRefresh(exercise.id)}/>
         </div>
     );
